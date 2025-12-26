@@ -3,18 +3,38 @@ POST http://localhost:6000/orders
 Content-Type: application/json
 
 {
-  "orderId": "12345",
-    "userId": "67890",
-    "orderStatus": "PROCESSING",
-    "totalPrice": 99.99,
-    "source": "New York",
-    "destination": "Los Angeles"
+  "orderId": "12347",
+  "userId": "67890",
+  "orderStatus": "PROCESSING",
+  "totalPrice": 99.99,
+  "source": "New York",
+  "destination": "Los Angeles"
 }
 
 ### GET Orders
 GET http://localhost:6000/orders
 
-
-
-### Metrics
+### Metrics Orders
 GET http://localhost:6000/actuator/metrics
+
+### Metrics - http.server.requests
+GET http://localhost:6000/actuator/metrics/http.server.requests
+
+### POST Deliveries
+POST http://localhost:6001/deliveries
+Content-Type: application/json
+
+{
+  "source": "12347",
+  "destination": "67890"
+}
+
+### Metrics Orders
+GET http://localhost:6001/actuator/metrics
+
+### Metrics - latencyInSec.deliveries
+
+GET http://localhost:6001/actuator/metrics/latencyInSec.deliveries
+
+### Metrics - counter.deliveries
+GET http://localhost:6001/actuator/metrics/counter.deliveries
