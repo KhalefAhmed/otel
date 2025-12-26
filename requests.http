@@ -1,0 +1,20 @@
+### POST Orders
+POST http://localhost:6000/orders
+Content-Type: application/json
+
+{
+  "orderId": "12345",
+    "userId": "67890",
+    "orderStatus": "PROCESSING",
+    "totalPrice": 99.99,
+    "source": "New York",
+    "destination": "Los Angeles"
+}
+
+### GET Orders
+GET http://localhost:6000/orders
+
+
+
+### Metrics
+GET http://localhost:6000/actuator/metrics

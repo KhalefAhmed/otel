@@ -18,13 +18,17 @@ public class OrdersController {
 
     @PostMapping("/orders")
     public Order createOrder(@RequestBody Order order) {
+        log.info("Received order creation request: {}", order);
         Order createdOrder = ordersService.createOrder(order);
+        log.info("Order created successfully: {}", createdOrder);
         return createdOrder;
     }
 
     @GetMapping("/orders/{orderId}")
     public Order getOrder(@PathVariable String orderId) {
+        log.info("Received order retrieval request for orderId: {}", orderId);
         Order retrievedOrder = ordersService.findOrder(orderId);
+        log.info("Order retrieved successfully: {}", retrievedOrder);
         return retrievedOrder;
     }
 }

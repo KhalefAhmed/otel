@@ -20,11 +20,14 @@ public class DeliveryClient {
     private RestTemplate restTemplate;
 
     public Delivery createDeliveryForOrder(Order order) {
+        log.info("Creating delivery for order: {}", order);
         Delivery generatedDelivery = fromOrder(order);
         ResponseEntity<Delivery> delivery;
         try {
             delivery = restTemplate.postForEntity(BASE_URL + DELIVERIES_URI, generatedDelivery, Delivery.class);
+            log.info("Delivery created successfully: {}", delivery.getBody());
         } catch (Exception e) {
+            log.error("Failed to create delivery for order {}: {}", order, e.getMessage());
             throw new DeliveryCreationException("Failed to create delivery for order " + order);
         }
         return delivery.getBody();

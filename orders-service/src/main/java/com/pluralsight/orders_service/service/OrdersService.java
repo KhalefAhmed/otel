@@ -21,16 +21,21 @@ public class OrdersService {
     private DeliveryClient deliveryClient;
 
     public Order createOrder(Order order) {
+        log.info("Creating order: {}", order);
         order.setOrderStatus(CREATED);
         ordersRepository.save(order);
+        log.info("Order created with id: {}", order.getOrderId());
         deliveryClient.createDeliveryForOrder(order);
         order.setOrderStatus(IN_DELIVERY);
+        log.info("Order status updated to IN_DELIVERY for order id: {}", order.getOrderId());
         return order;
     }
 
     public Order findOrder(String orderId) {
+        log.info("Finding order with id: {}", orderId);
         return ordersRepository.findById(orderId)
                 .orElseThrow(() -> {
+                    log.error("Order with id {} not found", orderId);
                     return new OrderNotFoundException("Order with id " + orderId + " not found");});
     }
 
