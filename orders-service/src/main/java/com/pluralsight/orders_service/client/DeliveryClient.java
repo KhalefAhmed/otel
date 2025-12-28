@@ -17,7 +17,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 @AllArgsConstructor
 public class DeliveryClient {
 
-    private static final String BASE_URL = "http://localhost:6001";
+    private static final String BASE_URL = "http://delivery-service:6001";
     private static final String DELIVERIES_URI = "/deliveries";
 
     private RestTemplate restTemplate;

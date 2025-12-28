@@ -1,6 +1,25 @@
 version: "3.8"
 services:
 
+  orders-service:
+    image: orders-service:1.0
+    container_name: orders-service
+    environment:
+      - OTEL_SERVICE_NAME=orders-service
+      - OTEL_INSTRUMENTATION_MICROMETER_ENABLED=true
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - OTEL_EXPORTER_OTLP_METRICS_ENABLED=true
+      - OTEL_EXPORTER_OTLP_TRAES_ENABLED=true
+      - OTEL_EXPORTER_OTLP_LOGGING_ENABLED=true
+    ports:
+      - "6000:6000"
+
+  delivery-service:
+    image: delivery-service:1.0
+    container_name: delivery-service
+    ports:
+      - "6001:6001"
+
   redis:
     image: redis:latest
     container_name: redis_before
@@ -70,3 +89,6 @@ services:
       - LOKI_STORAGE_BACKEND=memory
     ports:
       - "3100:3100"
+
+volumes:
+  redis_data: {}
