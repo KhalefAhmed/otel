@@ -38,3 +38,56 @@ GET http://localhost:6001/actuator/metrics/latencyInSec.deliveries
 
 ### Metrics - counter.deliveries
 GET http://localhost:6001/actuator/metrics/counter.deliveries
+
+### OTEL Metrics
+POST http://localhost:4318/v1/metrics
+Content-Type: application/json
+
+{
+  "resourceMetrics": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "order-service" }
+          }
+        ]
+      },
+      "scopeMetrics": [
+        {
+          "scope": {
+            "name": "io.opentelemetry.example",
+            "version": "1.0.0"
+          },
+          "metrics": [
+            {
+              "name": "http.server.requests",
+              "description": "HTTP Server Requests",
+              "unit": "1",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "method",
+                        "value": { "stringValue": "POST" }
+                      },
+                      {
+                        "key": "status_code",
+                        "value": { "stringValue": "200" }
+                      }
+                    ],
+                    "asInt": 150
+                  }
+                ],
+                "aggregationTemporality": "AGGREGATION_TEMPORALITY_CUMULATIVE",
+                "isMonotonic": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

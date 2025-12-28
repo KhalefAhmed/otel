@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 public class DeliveryService {
 
     public Delivery createDelivery(Delivery delivery) {
-        log.info("Creating delivery from {} to {}", delivery.getSource(), delivery.getDestination());
-        log.info("Created delivery with id {}", delivery.getId());
-        return generateDeliveryId(delivery);
+        log.info("Creating delivery for source {}, destination {}",  delivery.getSource(), delivery.getDestination());
+        Delivery generatedDelivery = generateDeliveryId(delivery);
+        log.info("Order delivery created with id {}, source {}, and destination {} "
+                ,  generatedDelivery.getId(), generatedDelivery.getSource(), generatedDelivery.getDestination());
+        return generatedDelivery;
     }
 
     private Delivery generateDeliveryId(Delivery delivery) {

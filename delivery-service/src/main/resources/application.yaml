@@ -4,6 +4,22 @@ spring:
 server:
   port: 6001
 
+otel:
+  instrumentation:
+    micrometer:
+      enabled: true
+  service:
+    name: "delivery-service"
+  exporter:
+    otlp:
+      endpoint: "http://localhost:4318"
+      logging:
+        enabled: true
+      metrics:
+        enabled: true
+      traces:
+        enabled: true
+
 management:
   endpoints:
     web:
