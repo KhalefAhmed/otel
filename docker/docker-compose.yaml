@@ -1,6 +1,14 @@
 version: "3.8"
 services:
 
+  redis:
+    image: redis:latest
+    container_name: redis_before
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
   otel-collector:
     image: otel/opentelemetry-collector-contrib:0.120.0
     container_name: otel-collector
@@ -10,3 +18,46 @@ services:
       - ./telemetry-data.json:/etc/telemetry-data.json
     ports:
       - "4318:4318"       # OTLP HTTP receiver
+
+  mimir-1:
+    image: grafana/mimir:2.14.3
+    command: [ "-config.file=/etc/mimir.yaml" ]
+    container_name: mimir-1
+    hostname: mimir-1
+    volumes:
+      - ./mimir.yaml:/etc/mimir.yaml
+    ports:
+      - "8080:8080"
+
+  mimir-2:
+    image: grafana/mimir:2.14.3
+    command: [ "-config.file=/etc/mimir.yaml" ]
+    container_name: mimir-2
+    hostname: mimir-2
+    volumes:
+      - ./mimir.yaml:/etc/mimir.yaml
+
+  mimir-3:
+    image: grafana/mimir:2.14.3
+    command: [ "-config.file=/etc/mimir.yaml" ]
+    container_name: mimir-3
+    hostname: mimir-3
+    volumes:
+      - ./mimir.yaml:/etc/mimir.yaml
+
+  tempo:
+    image: grafana/tempo:2.7.1
+    container_name: tempo
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    ports:
+      - "3200:3200"
+    volumes:
+      - ./tempo.yaml:/etc/tempo.yaml
+
+  loki:
+    image: grafana/loki:3.4.2
+    container_name: loki
+    environment:
+      - LOKI_STORAGE_BACKEND=memory
+    ports:
+      - "3100:3100"
