@@ -8,28 +8,21 @@ processors:
   batch:
 
 exporters:
-  file:
-    path: /etc/telemetry-data.json
-  otlphhttp/metrics:
-    endpoint: "http://mimir-1:8080/otlp"
-    header:
-      "X-Scope-OrgID": "tenant1"
-  otlphhttp/traces:
-    endpoint: "http://tempo:tempo:4318"
-  otlphhttp/logs:
-    endpoint: "http://loki:3100/otlp"
+  otlphttp/logs:
+    endpoint: http://tempo:4318
+  otlphttp/metrics:
+    endpoint: http://mimir-1:8080/otlp/v1/metrics
+  otlphttp/traces:
+    endpoint: http://tempo:4318
 
 service:
   pipelines:
-    traces:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [otlphttp/traces]
-    metrics:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [otlphhttp/metrics]
     logs:
       receivers: [otlp]
-      processors: [batch]
-      exporters: [otlphhttp/logs]
+      exporters: [otlphttp/logs]
+    metrics:
+      receivers: [otlp]
+      exporters: [otlphttp/metrics]
+    traces:
+      receivers: [otlp]
+      exporters: [otlphttp/traces]
