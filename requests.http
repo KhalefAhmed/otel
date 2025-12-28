@@ -3,8 +3,8 @@ POST http://localhost:6000/orders
 Content-Type: application/json
 
 {
-  "orderId": "12347",
-  "userId": "67890",
+  "orderId": "{{$uuid}}",
+  "userId": "{{$uuid}}",
   "orderStatus": "PROCESSING",
   "totalPrice": 99.99,
   "source": "New York",
