@@ -16,7 +16,7 @@ public class DeliveryController {
     private DeliveryService deliveryService;
 
     @Timed(value = "latencyInSec.deliveries", description = "Time taken to create a delivery")
-    @Counted("counter.deliveries")
+    @Counted(value = "counter.deliveries", description = "Number of deliveries created")
     @PostMapping("/deliveries")
     public Delivery createDelivery(@RequestBody Delivery delivery) {
         return deliveryService.createDelivery(delivery);

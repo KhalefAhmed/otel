@@ -36,6 +36,7 @@ public class OrdersService {
         return ordersRepository.findById(orderId)
                 .orElseThrow(() -> {
                     log.error("Order with id {} not found", orderId);
+                    Metrics.counter("counter.orders.retrieved.count.failure").increment();
                     return new OrderNotFoundException("Order with id " + orderId + " not found");});
     }
 
